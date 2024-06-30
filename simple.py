@@ -15,6 +15,7 @@ import datetime
 
 #CSV_TO_USE=r"C:\Users\Dell\\Downloads\\simple_final_docker_ok\\chess.csv"
 CSV_TO_USE=r"/tmp/chess.csv"
+readiness='/tmp/readiness.log'
 REST_API_GET='http://api.open-notify.org/astros.json'
 REST_API_GET2='http://universities.hipolabs.com/search?country=United+States'
 
@@ -36,10 +37,14 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink"])
 def create_infinite_loop():
     
     while True:
-        time.sleep(1)
+        time.sleep(2)
         x = datetime.datetime.now()
         print(x)
-        
+        with open(readiness, 'a') as file:
+    
+            # Write content to the file
+            file.write(f"\n{x}")
+               
 def create_error():
     d=4
     val=d/0
@@ -69,11 +74,19 @@ if __name__ == "__main__":
 
     print("Color from random.choice =" + COLOR)
     time.sleep(3) # Sleep for 3 seconds
-    #util_rest_get()
+
+    with open(readiness, 'w') as file:
+    
+        # Write content to the file
+        file.write("Hello, this is a new readiness file created using open() function..")
+        
+    util_rest_get()
     
     if args.color:
         print("Color from command line argument =" + args.color)
-
+        if COLOR_FROM_ENV:
+             print("Color from COLOR_FROM_ENV =" + COLOR_FROM_ENV)
+             
         if COLOR == args.color and COLOR_FROM_ENV == args.color :
             print (f"Bravo ! All color matched, you will get something extra..")
             time.sleep(30) # Sleep for 30 seconds
@@ -83,7 +96,7 @@ if __name__ == "__main__":
         else:
             
             print("A color was set through environment variable -" + repr(COLOR_FROM_ENV) + ". However, color from command line argument takes precendence with color - " + args.color)
-            #util_rest_get()
+            util_rest_get()
             
         create_infinite_loop()
         

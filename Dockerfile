@@ -3,6 +3,7 @@ WORKDIR /opt
 #COPY simple.py /opt
 COPY *.py /opt 
 COPY Requirements.txt /opt
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r /opt/Requirements.txt
 
 FROM python:3.9-slim
