@@ -121,14 +121,14 @@ if __name__ == "__main__":
 
 #############################################
 
-# - docker build -t simple:v1 .
-# - docker run simple:v1 --color red
-# - docker run simple:v1 --color BLACK
+# - docker build -t 198404/simple:v1 .
+# - docker run 198404/simple:v1 --color red
+# - docker run 198404/simple:v1 --color BLACK
 
-# If Normal case, without docker, then set ENV variable APP_COLOR
+# In Normal case(without docker usages) then set ENV variable 'APP_COLOR' for below OS
 
   # 1 ) Windows : set APP_COLOR=blue
   # 2 ) Linux   : export APP_COLORb=blue
   
-  #  python simple.py / Or
+  #  python simple.py # [ Not working under docker, but for normal execution ] 
   #  python simple.py --color red

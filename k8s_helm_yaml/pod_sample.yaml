@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: simple
+  name: simple2
+spec:
+  containers:
+  - env:
+    - name: k1
+      value: v1
+    image: 198404/simple:v1
+    args: ["--color", "pink"]
+    name: simple
+    ports:
+    - containerPort: 8080
+      name: test-port
+      protocol: TCP
+    livenessProbe:
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      exec:
+        command: 
+        - cat 
+        - /tmp/readiness.log
+    readinessProbe:
+      initialDelaySeconds: 30
+      failureThreshold: 2
+      successThreshold: 1
+      exec:
+        command: 
+        - cat 
+        - /tmp/readiness.log
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: simple
+  name: simple
+spec:
+  containers:
+  - env:
+    - name: k1
+      value: v1
+    image: 198404/simple:v1
+    args: ["--color", "pink"]
+    name: simple
+    ports:
+    - containerPort: 8080
+      name: test-port
+      protocol: TCP
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+---
+
+# Test in k8s platform:
+
+#k create -f simple_po.yaml
+#k exec simple -- ls -ltrh /tmp/readiness.log
+#k exec simple2 -- ls -ltrh /tmp/readiness.log
