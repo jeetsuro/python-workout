@@ -65,7 +65,7 @@ status: {}
 
 ---
 
-# Test in k8s platform:
+# Test in any k8s platform:
 
 #k create -f simple_po.yaml
 #k exec simple -- ls -ltrh /tmp/readiness.log
