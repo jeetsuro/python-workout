@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-import socket
+import socket, sys
 import random
 import os
 import argparse
@@ -10,10 +10,13 @@ import requests
 # my custom module
 import data_create
 import data_display
+import datetime
+
 
 #CSV_TO_USE=r"C:\Users\Dell\\Downloads\\simple_final_docker_ok\\chess.csv"
 CSV_TO_USE=r"/tmp/chess.csv"
 REST_API_GET='http://api.open-notify.org/astros.json'
+REST_API_GET2='http://universities.hipolabs.com/search?country=United+States'
 
 color_codes = {
     "red": "#e74c3c",
@@ -30,10 +33,22 @@ COLOR_FROM_ENV = os.environ.get('APP_COLOR')
 # Generate a random color
 COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink"])
 
+def create_infinite_loop():
+    
+    while True:
+        time.sleep(1)
+        x = datetime.datetime.now()
+        print(x)
+        
+def create_error():
+    d=4
+    val=d/0
+    return val
+    
 def util_rest_get():
     
-    print(f"Calling REST API {REST_API_GET}")
-    response = requests.get(REST_API_GET)
+    print(f"Calling REST API {REST_API_GET2}")
+    response = requests.get(REST_API_GET2)
     print(response)
     print(response.json())
 
@@ -54,7 +69,7 @@ if __name__ == "__main__":
 
     print("Color from random.choice =" + COLOR)
     time.sleep(3) # Sleep for 3 seconds
-    util_rest_get_query()
+    #util_rest_get()
     
     if args.color:
         print("Color from command line argument =" + args.color)
@@ -67,13 +82,24 @@ if __name__ == "__main__":
             util_rest_get()
         else:
             
-            print("A color was set through environment variable -" + COLOR_FROM_ENV + ". However, color from command line argument takes precendence with color - " + args.color) 
+            print("A color was set through environment variable -" + repr(COLOR_FROM_ENV) + ". However, color from command line argument takes precendence with color - " + args.color)
+            #util_rest_get()
+            
+        create_infinite_loop()
+        
     elif COLOR_FROM_ENV:
         print("No Command line argument. Color from environment variable = " + COLOR_FROM_ENV)
         COLOR = COLOR_FROM_ENV
     else:
-        print("No command line argument or environment variable. Picking a Random Color = " + COLOR)
-        util_rest_get_query()
+        print("No command line argument value, No environment variable. Picking just a Random Color = " + COLOR)
+        
+        try:
+            util_rest_get_query()
+            print('Creating error..')
+            create_error()
+        except:
+            print("ERROR: error occured, exiting..")
+            sys.exit(-1)
         
     # Check if input color is a supported one
     if COLOR not in color_codes:
