@@ -1,0 +1,12 @@
+setup.py
+setuptool_test/__init__.py
+setuptool_test/app.py
+setuptool_test.egg-info/PKG-INFO
+setuptool_test.egg-info/SOURCES.txt
+setuptool_test.egg-info/dependency_links.txt
+setuptool_test.egg-info/entry_points.txt
+setuptool_test.egg-info/top_level.txt
+setuptool_test/utils/__init__.py
+setuptool_test/utils/utils.py
+tests/__init__.py
+tests/tests.py
