@@ -6,10 +6,10 @@ However, using sqlalchemy.orm directly gives you more control but requires manua
 
 Features :
 - In-memory SQL-lite connection
-- Flask based CRUD operations
+- Flask based basic CRUD operations
 - Pyetest based taste code
 - pylint support 
 - guicorn spawns our flask app
-- Flask support
+
 
 
