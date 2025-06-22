@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users and Addresses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fb;
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-address {
+            font-style: italic;
+            color: #888;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Users and corresponding addresses</h1>
+    <table>
+        <thead>
+            <tr>
+				{% for header in headers %}
+					<th>{{ header.replace('_', ' ').title() }}</th>
+				{% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                {% if user.addresses %}
+                    {% for addr in user.addresses %}
+                        <tr>
+                            {% if loop.first %}
+                                <td rowspan="{{ user.addresses|length }}">{{ user.id }}</td>
+                                <td rowspan="{{ user.addresses|length }}">{{ user.name }}</td>
+                                <td rowspan="{{ user.addresses|length }}">{{ user.email }}</td>
+                                <td rowspan="{{ user.addresses|length }}">{{ user.age or 'N/A' }}</td>
+                            {% endif %}
+                            <td>{{ addr.street }}</td>
+                            <td>{{ addr.city }}</td>
+                            <td>{{ addr.zipcode or 'N/A'}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.age or 'N/A' }}</td>
+                        <td colspan="3" class="no-address">No addresses available</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

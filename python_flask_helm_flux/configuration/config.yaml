@@ -1,0 +1,12 @@
+flask:
+  host: 0.0.0.0
+  port: 5000
+  debug: true
+app:
+  title: "Simple Flask WebApp"
+  message: "Hello from Flask!@@"
+db:
+  db_details_json: 'user_details.json'
+  sql_protocol: 'sqlite://'
+  sql_db_uri_memory: 'sqlite:///:memory:'
+  #sql_db_uri_file_global: 'sqlite:////var/dbfile/mydatabase.sqlite3'
