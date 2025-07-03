@@ -1,0 +1,29 @@
+name: python_flask_helm_flux
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v4
+      with:
+        username: 198404
+        password: ${{ secrets.DOCKER_HUB_PAT }}
+        
+    - name: Build and push image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: 198404.jeet_suro/python_flask_helm_flux:0.0.1
+        
