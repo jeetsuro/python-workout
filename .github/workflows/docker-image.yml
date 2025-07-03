@@ -23,8 +23,8 @@ jobs:
     - name: Build and push image
       uses: docker/build-push-action@v5
       with:
-        context: ../../python-workout/python_flask_helm_flux
-        file: ../../python-workout/python_flask_helm_flux/Dockerfile
+        context: python-workout/python_flask_helm_flux
+        file: python-workout/python_flask_helm_flux/Dockerfile
         push: true
         tags: 198404.jeet_suro/python_flask_helm_flux:0.0.1
         
