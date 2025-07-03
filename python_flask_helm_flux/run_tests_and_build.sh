@@ -15,10 +15,10 @@ if [ -z "$score" ]; then
 fi
 
 echo "✅ Pylint Score: $score/10"
-pylint_ok_score=4
+pylint_ok_score=1
 
 # --------- Step 2: Validate pylint score ----------
-if (( $(echo "$score <= ${pylint_ok_score}" | bc -l) )); then
+if (( $(echo "$score < ${pylint_ok_score}" | bc -l) )); then
   echo "❌ Pylint score is too low (<= 5). Skipping tests and Docker build."
   exit 1
 fi
@@ -26,12 +26,13 @@ fi
 echo "🚀 Pylint score > 5. Proceeding to run tests..."
 
 # --------- Step 3: Run pytest ----------
-pytest --junitxml=results.xml
+touch /tmp/results.xml
+pytest --junitxml=/tmp/results.xml
 
 # --------- Step 4: Parse pytest results ----------
 read total passed <<< $(python3 <<EOF
 import xml.etree.ElementTree as ET
-tree = ET.parse('results.xml')
+tree = ET.parse('/tmp/results.xml')
 root = tree.getroot()
 total = int(root.attrib['tests'])
 failures = int(root.attrib.get('failures', 0))

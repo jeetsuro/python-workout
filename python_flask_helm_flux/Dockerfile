@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app/ app/
 #COPY app.py .
-COPY flaskapp.py .
+COPY app.py .
 COPY configuration/ configuration/
 
 # Create /var/dbfile as root, give permissions to appuser
@@ -25,8 +25,8 @@ EXPOSE 5000
 
 # flaskapp:app --> flaskapp.py:app object
 # Each Gunicorn worker is a separate process with seperate mem-space, so app will be initialized 4 times by 4 worker-process
-CMD ["gunicorn", "app:fapp", "-w", "4", "-b", "0.0.0.0:5000", "--log-level=debug","--reload"] 
-
+#CMD ["gunicorn", "app:fapp", "-w", "4", "-b", "0.0.0.0:5000", "--log-level=debug","--reload"] 
+CMD ["python", "/home/appuser/app.py"]
 
 # ########### DOCKER command to follow #################### :
 
@@ -45,5 +45,9 @@ CMD ["gunicorn", "app:fapp", "-w", "4", "-b", "0.0.0.0:5000", "--log-level=debug
 
 # pytest : pytest -c configuration/pytest.ini
 # pytest --html=reports/report.html --self-contained-html
+
+
+# Docker build :
+    # docker build -t python-flask-helm-flux:0.0.1 .
 
 
