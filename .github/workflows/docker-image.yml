@@ -26,5 +26,5 @@ jobs:
         context: python_flask_helm_flux
         file: python_flask_helm_flux/Dockerfile
         push: true
-        tags: docker.io/198404.jeet_suro/python_flask_helm_flux:0.0.1
+        tags: docker.io/198404/python_flask_helm_flux:0.0.1
         
